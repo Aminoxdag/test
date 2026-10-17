@@ -112,7 +112,7 @@ main.vin{animation:vin .36s cubic-bezier(.22,.9,.3,1)}
 
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 
-/* ===== liquid glass search + hero ===== */
+/* ===== liquid glass search ===== */
 body{background-image:radial-gradient(90% 50% at 50% 0%,rgba(120,122,135,.16),transparent 70%);background-repeat:no-repeat}
 .top{padding-inline:18px 6px;gap:8px;border-radius:30px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);-webkit-backdrop-filter:blur(35px) saturate(1.5);backdrop-filter:blur(35px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.24),inset 0 -1px 0 rgba(255,255,255,.06),0 18px 50px rgba(0,0,0,.65);transition:transform .35s cubic-bezier(.22,.9,.3,1),border-color .3s,box-shadow .3s}
 .top:focus-within{transform:translateY(-2px);border-color:rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(255,255,255,.1),0 24px 60px rgba(0,0,0,.8)}
@@ -140,31 +140,13 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none}
 [dir=rtl] .go svg{transform:scaleX(-1)}
 .stl{height:0;overflow:hidden;opacity:0;text-align:center;font-size:12.5px;color:var(--mut);transition:height .35s,opacity .35s,margin .35s}
 .stl.on{height:22px;margin-top:12px;opacity:1}.stl.er{color:#d9917f}
-.hero{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .65s cubic-bezier(.22,.9,.3,1),opacity .5s ease,margin .65s ease}
-.hero-on .hero{grid-template-rows:1fr;opacity:1;margin-top:22px}
-#app>main.idle.hero-on:first-child{padding-top:calc(14px + env(safe-area-inset-top))}
-.hin{min-height:0;overflow:hidden;border-radius:28px}
-.hbox{position:relative;aspect-ratio:16/10;border-radius:28px;overflow:hidden;background-color:var(--s1);border:1px solid rgba(255,255,255,.08);cursor:pointer;transform:translateY(18px) scale(.97);transition:transform .7s cubic-bezier(.22,.9,.3,1)}
-.hero-on .hbox{transform:none}
-.hsl{position:absolute;inset:0;opacity:0;transition:opacity 1s ease}
-.hsl.on{opacity:1;z-index:1}
-.hsl img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.12)}
-.hero-on .hsl.on img{animation:kb 7.5s ease-out forwards}
-@keyframes kb{from{transform:scale(1.16)}to{transform:scale(1.03)}}
-.hsl::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,7,.35),transparent 35%,rgba(5,5,7,.55) 62%,rgba(5,5,7,.95))}
-.cap{position:absolute;inset-inline:18px;bottom:24px;z-index:2;display:flex;flex-direction:column;gap:5px;transform:translateY(16px);opacity:0;transition:transform .8s cubic-bezier(.22,.9,.3,1) .3s,opacity .8s ease .3s}
-.hsl.on .cap{transform:none;opacity:1}
-.cap b{font:400 21px/1.3 var(--serif);color:#f1f2f5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.cap small{color:#a9acb5;font-size:12.5px}
-.new{align-self:flex-start;padding:2px 12px;border-radius:12px;font-size:11px;color:#e9eaee;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.hbar{position:absolute;z-index:3;inset:12px 16px auto;display:flex;gap:5px}
-.hbar i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.2);overflow:hidden;position:relative}
-.hbar i.d{background:rgba(255,255,255,.75)}
-.hero-on .hbar i.on::after{content:"";position:absolute;inset:0;background:#fff;transform-origin:left;animation:pg 5.6s linear forwards}
-[dir=rtl] .hbar i.on::after{transform-origin:right}
-@keyframes pg{from{transform:scaleX(0)}}
 .tv{width:100%;aspect-ratio:16/9;border-radius:16px;background:#000;margin:0 0 14px}
-@media(prefers-reduced-motion:reduce){.hero-on .hsl.on img,.hero-on .hbar i.on::after{animation:none}.hero,.hbox,.cap,.dd{transition:none}}
+@media(prefers-reduced-motion:reduce){.dd{transition:none}}
+
+
+#app{position:relative}
+/* ===== description language ===== */
+.dtx{white-space:pre-line;color:#c0c2c9;margin:0 0 6px;line-height:1.85}
 </style>
 </head>
 <body>
@@ -191,7 +173,7 @@ const CATALOG = [
 
 /* ================= i18n ================= */
 const T = {
-ar:{e_empty:'لا توجد أعمال حديثة من الاستوديوهات.',newBadge:'جديد',submit:'إرسال',searching:'جاري البحث…',results:'نتيجة',tags:'الوسوم',director:'المخرج',cast:'الأداء',trailer:'العرض التشويقي',total:'مشهد',workedWith:'عملت مع',age:'العمر',gallery:'صور',years:'السنوات',home:'الرئيسية',search:'بحث',studios:'الاستوديوهات',favs:'المفضلة',settings:'الإعدادات',scenes:'المشاهد',performers:'الأداء',all:'الكل',
+ar:{submit:'إرسال',ok:'تم',noDesc:'لا يتوفر وصف لهذا الفيلم.',translating:'جارٍ ترجمة الوصف...',tr_quota:'تم الوصول إلى حد الترجمة المجاني لهذا اليوم. حاول لاحقاً أو غيّر اللغة إلى English من الإعدادات.',tr_timeout:'انتهت مهلة خدمة الترجمة.',tr_net:'تعذر الاتصال بخدمة الترجمة.',tr_empty:'تعذرت ترجمة الوصف الآن.',tr_http:'خدمة الترجمة غير متاحة حالياً.',searching:'جاري البحث…',results:'نتيجة',tags:'الوسوم',director:'المخرج',cast:'الأداء',trailer:'العرض التشويقي',total:'مشهد',workedWith:'عملت مع',age:'العمر',gallery:'صور',years:'السنوات',home:'الرئيسية',search:'بحث',studios:'الاستوديوهات',favs:'المفضلة',settings:'الإعدادات',scenes:'المشاهد',performers:'الأداء',all:'الكل',
  searchPh:'بحث…',recentP:'شوهد مؤخراً: أسماء',recentS:'شوهد مؤخراً: مشاهد',quick:'استوديوهات سريعة',recentSearch:'عمليات البحث الأخيرة',
  clear:'مسح',noRes:'لا توجد نتائج.',selAll:'تحديد الكل',clearAll:'إلغاء الكل',vmg:'مجموعة Vixen',studioFind:'ابحث في الاستوديوهات',selected:'محدد',
  reset:'إعادة ضبط الفلاتر',hideUnk:'إخفاء المشاهد بدون استوديو',sort:'الترتيب (على النتائج المحمّلة)',rel:'الأكثر صلة',newest:'الأحدث',oldest:'الأقدم',az:'أ-ي / A-Z',
@@ -204,7 +186,7 @@ ar:{e_empty:'لا توجد أعمال حديثة من الاستوديوهات.'
  e_network:'تعذر الاتصال. تحقق من الإنترنت، أو قد يمنع الخادم الطلب من هذا المصدر (CORS).',e_http:'خطأ من الخادم:',e_notoken:'لا يوجد مفتاح API.',
  emptyHist:'اكتب للبحث. سيظهر سجل بحثك هنا.',hist:'سجل البحث',unresolved:'الاستوديو غير محلول',tapStudio:'عرض مشاهد الاستوديو',children:'علامات فرعية',
  pAll:'تحقق: لا يوجد استوديو محدد = كل الاستوديوهات',date:'التاريخ',studio:'الاستوديو',idl:'المعرّف',cachedAt:'آخر تحديث'},
-en:{e_empty:'No recent releases found.',newBadge:'New',submit:'Search',searching:'Searching…',results:'results',tags:'Tags',director:'Director',cast:'Cast',trailer:'Trailer',total:'scenes',workedWith:'Worked with',age:'Age',gallery:'Photos',years:'Years',home:'Home',search:'Search',studios:'Studios',favs:'Favorites',settings:'Settings',scenes:'Scenes',performers:'Performers',all:'All',
+en:{submit:'Search',ok:'OK',noDesc:'No description available for this film.',translating:'Translating description...',tr_quota:'Translation limit reached.',tr_timeout:'Translation timed out.',tr_net:'Could not reach the translation service.',tr_empty:'Translation failed.',tr_http:'Translation service unavailable.',searching:'Searching…',results:'results',tags:'Tags',director:'Director',cast:'Cast',trailer:'Trailer',total:'scenes',workedWith:'Worked with',age:'Age',gallery:'Photos',years:'Years',home:'Home',search:'Search',studios:'Studios',favs:'Favorites',settings:'Settings',scenes:'Scenes',performers:'Performers',all:'All',
  searchPh:'Search…',recentP:'Recently viewed: performers',recentS:'Recently viewed: scenes',quick:'Quick studios',recentSearch:'Recent searches',
  clear:'Clear',noRes:'No results.',selAll:'Select all',clearAll:'Clear all',vmg:'Vixen Media Group',studioFind:'Search studios',selected:'selected',
  reset:'Reset filters',hideUnk:'Hide scenes with no studio',sort:'Sort (loaded results)',rel:'Relevance',newest:'Newest',oldest:'Oldest',az:'A-Z',
@@ -225,6 +207,7 @@ let S = Object.assign({}, DEF);
 try { Object.assign(S, JSON.parse(localStorage.getItem(LS) || '{}')); } catch (e) {}
 if (S.defSel) S.sel = [...S.defSel];
 const save = () => { try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {} };
+const SEP = () => S.lang === 'ar' ? '، ' : ', ';
 const t = k => (T[S.lang] && T[S.lang][k]) || T.en[k] || k;
 const R = {q:'', sort:'rel', fy:'', fr:'', log:[], panel:true, ftab:'scenes', adv:false, resolving:false, siteErr:null};
 const SC = new Map(), PF = new Map(), PV = new Map(), ST = new Map();
@@ -305,7 +288,7 @@ function normScene(s, full) {
   const site = s.site || s.studio || null;
   const o = {
     id: String(s.id), title: s.title || '', date: s.date || '', year: s.date ? String(s.date).slice(0, 4) : '',
-    mins: s.duration ? Math.round(s.duration / 60) : 0, desc: s.description || '', url: s.url || '',
+    mins: s.duration ? Math.round(s.duration / 60) : 0, desc: String(s.description || s.synopsis || s.plot || s.summary || s.scene_description || s.short_description || s.overview || '').trim(), url: s.url || '',
     img: pickImg(s.poster, s.image, s.background),
     studio: site ? {id: site.id != null ? String(site.id) : '', name: site.name || site.short_name || '', logo: pickImg(site.logo, site.favicon), parent_id: site.parent_id != null ? String(site.parent_id) : ''} : null,
     bg: pickImg(s.background), tags: (s.tags || []).map(x => typeof x === 'string' ? x : x && x.name).filter(Boolean), director: s.director || '', trailer: normUrl(s.trailer || ''), full: !!full,
@@ -423,7 +406,7 @@ document.addEventListener('error', e => {
 
 const sceneCard = s => `<article class="card" data-act="scene" data-id="${esc(s.id)}"><div class="iw">${im(s.img)}${s.mins ? `<span class="dur">${s.mins} ${t('min')}</span>` : ''}</div><div class="cb"><h3>${esc(s.title)}</h3>
 <div class="meta">${esc([s.studio && s.studio.name, s.year].filter(Boolean).join('  /  '))}${s.mins ? ' &nbsp;' + s.mins + ' ' + t('min') : ''}</div>
-${s.perfs.length ? `<div class="pf">${esc(s.perfs.slice(0, 3).map(p => p.name).join('، '))}</div>` : ''}</div></article>`;
+${s.perfs.length ? `<div class="pf">${esc(s.perfs.slice(0, 3).map(p => p.name).join(SEP()))}</div>` : ''}</div></article>`;
 const perfCard = p => `<div class="pc" data-act="perf" data-id="${esc(p.id)}">${im(p.img, 'pi')}<p>${esc(p.name)}</p></div>`;
 const skel = n => `<div class="${S.view === 'list' ? 'list' : 'grid'}">${'<div class="card"><div class="iw"><div class="im sk"></div></div><div class="cb"><i class="sk"></i><i class="sk s"></i></div></div>'.repeat(n)}</div>`;
 const errBox = (e, name) => `<div class="err"><span>${esc(errMsg(e))}</span><button class="btn" data-act="retry" data-f="${name}">${t('retry')}</button></div>`;
@@ -481,7 +464,7 @@ let stack = [{v:'home'}];
 const cur = () => stack[stack.length - 1];
 let ANIM = null;
 function go(v, a) { cur().y = scrollY; stack.push({v, a}); history.pushState({}, ''); ANIM = 1; render(); scrollTo(0, 0); }
-function root(v) { stack = [{v}]; ANIM = 0; R.heroOn = false; render(); scrollTo(0, 0); }
+function root(v) { stack = [{v}]; ANIM = 0; render(); scrollTo(0, 0); }
 window.addEventListener('popstate', () => { if (stack.length > 1) { stack.pop(); ANIM = -1; render(); scrollTo(0, cur().y || 0); } });
 
 const HEART = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 21s-8-5-9.5-10A5 5 0 0 1 12 7a5 5 0 0 1 9.5 4C20 16 12 21 12 21z"/></svg>';
@@ -495,7 +478,7 @@ function favsV() {
 function render() {
   document.documentElement.lang = S.lang; document.documentElement.dir = S.lang === 'ar' ? 'rtl' : 'ltr';
   document.body.className = S.theme === 'dim' ? 'dim' : '';
-  heroStop(); const c = cur(); if (c.v === 'home') c.v = 'search';
+  const c = cur(); if (c.v === 'home') c.v = 'search';
   const sub = stack.length > 1; let title = '', body = '';
   if (c.v === 'search') body = searchV();
   else if (c.v === 'studios') { title = t('studios'); body = studiosV(); }
@@ -507,9 +490,9 @@ function render() {
   const idle = c.v === 'search' && !(R.q || effSel().length);
   const fv = (c.v === 'scene' || c.v === 'perf') ? `<button class="fav ${(c.v === 'scene' ? S.favS : S.favP)[c.a] ? 'on' : ''}" data-act="fav" aria-label="fav">${HEART}</button>` : '';
   const hdr = (sub || c.v !== 'search') ? `<header>${sub ? `<button class="back" data-act="back" aria-label="back">${S.lang === 'ar' ? '→' : '←'}</button>` : ''}<h1>${esc(title)}</h1><div class="hi">${fv}</div></header>` : '';
-  $('#app').innerHTML = `${hdr}<main id="main" class="${idle ? 'idle' : ''}${idle && R.heroOn ? ' hero-on' : ''}">${body}</main>${sub ? '' : navHTML(c)}`;
+  $('#app').innerHTML = `${hdr}<main id="main" class="${idle ? 'idle' : ''}">${body}</main>${sub ? '' : navHTML(c)}`;
   if (ANIM !== null) { const m = $('#main'); m.style.setProperty('--d', ANIM * (S.lang === 'ar' ? -1 : 1)); m.classList.add('vin'); ANIM = null; }
-  if (c.v === 'search') { updateRes(); heroDraw(); }
+  if (c.v === 'search') updateRes();
   if (c.v === 'perf') updatePV();
   if (c.v === 'studio') updateST();
 }
@@ -546,7 +529,7 @@ function searchV() {
 <button class="clr" data-act="clear" aria-label="clear"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
 <div class="fwrap"><button class="fbtn ${filtersActive() ? 'f-on' : ''}" data-act="dd" aria-label="filters"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h8M18 7h2M4 17h2M12 17h8"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><i class="dot"></i></button><div id="dd" class="dd">${ddHTML()}</div></div>
 <button class="go" data-act="submit"><span>${t('submit')}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-<div id="st" class="stl"></div><div id="hero"></div><div id="fpan">${R.fo ? filtHTML() : ''}</div><div id="res"></div>`;
+<div id="st" class="stl"></div><div id="fpan">${R.fo ? filtHTML() : ''}</div><div id="res"></div>`;
 }
 function stLine(act) {
   const el = $('#st'); if (!el) return;
@@ -555,41 +538,6 @@ function stLine(act) {
   const on = act && (busy || er || n);
   if (on) el.textContent = busy ? t('searching') : er ? errMsg(er) : n + ' ' + t('results');
   el.className = 'stl' + (on ? ' on' : '') + (er && act ? ' er' : '');
-}
-/* ---- hero: recent releases ---- */
-const HERO = {items:[], busy:false, loaded:false, i:0, t:null};
-async function loadHero() {
-  if (HERO.busy || HERO.loaded || !S.sites) return;
-  const ids = [...new Set(CATALOG.flatMap(c => idsFor([c.key], false)))]; if (!ids.length) return;
-  HERO.busy = true; HERO.err = null; heroDraw();
-  const get = id => api('/scenes', {site_id:id, orderBy:'recently_released', per_page:8}, {ttl:600000}).catch(e => e.code === 'abort' ? Promise.reject(e) : api('/scenes', {site_id:id, per_page:8}, {ttl:600000}));
-  const rs = [], seen = new Set(), a = [], today = new Date().toISOString().slice(0, 10);
-  for (let i = 0; i < ids.length; i += 3) rs.push(...await Promise.allSettled(ids.slice(i, i + 3).map(get)));
-  rs.forEach(r => r.status === 'fulfilled' && (r.value.data || []).map(normScene).forEach(s => { if (!seen.has(s.id) && (s.bg || s.img) && s.date && s.date <= today) { seen.add(s.id); a.push(s); } }));
-  a.sort((x, z) => z.date.localeCompare(x.date));
-  HERO.items = a.slice(0, 8); HERO.loaded = a.length > 0; HERO.busy = false;
-  const ok = rs.some(r => r.status === 'fulfilled');
-  HERO.err = a.length ? null : ok ? {code:'empty'} : rs[0].reason;
-  dbg('hero: ' + a.length + ' items, ' + rs.filter(r => r.status === 'fulfilled').length + '/' + rs.length + ' ok');
-  heroDraw();
-}
-function heroDraw() {
-  const el = $('#hero'); if (!el) return; const it = HERO.items;
-  if (!it.length) { el.innerHTML = HERO.busy ? '<div class="hero"><div class="hin"><div class="hbox sk"></div></div></div>' : HERO.err ? `<div class="hero"><div class="hin">${errBox(HERO.err, 'hero')}</div></div>` : ''; return; }
-  el.innerHTML = `<div class="hero"><div class="hin"><div class="hbox" id="hbox" data-act="hero">${it.map((s, i) => `<div class="hsl${i === HERO.i ? ' on' : ''}"><img referrerpolicy="no-referrer" src="${esc(s.bg || s.img)}" alt=""><div class="cap"><span class="new">${t('newBadge')}</span><b>${esc(s.title)}</b><small>${esc([s.studio && s.studio.name, s.date].filter(Boolean).join('  /  '))}</small></div></div>`).join('')}<div class="hbar">${it.map((_, i) => `<i class="${i < HERO.i ? 'd' : i === HERO.i ? 'on' : ''}"></i>`).join('')}</div></div></div></div>`;
-  if (R.heroOn) heroStart();
-}
-const heroStop = () => clearInterval(HERO.t);
-function heroStart() { heroStop(); if (HERO.items.length > 1) HERO.t = setInterval(() => heroGo(1), 5600); }
-function heroGo(d) {
-  const n = HERO.items.length; if (!n) return; HERO.i = (HERO.i + d + n) % n;
-  document.querySelectorAll('.hsl').forEach((e, i) => e.classList.toggle('on', i === HERO.i));
-  document.querySelectorAll('.hbar i').forEach((e, i) => { e.className = i < HERO.i ? 'd' : i === HERO.i ? 'on' : ''; });
-}
-function setHero(on) {
-  if (R.heroOn === on) return; R.heroOn = on;
-  const m = $('#main'); if (m) m.classList.toggle('hero-on', on);
-  if (on) { loadHero(); heroStart(); } else heroStop();
 }
 function histHTML() {
   if (!S.hist.length) return '';
@@ -606,7 +554,7 @@ function runSearch(fromState) {
 function updateRes() {
   const dd = $('#dd'); if (dd) dd.innerHTML = ddHTML(); const fb = $('.fbtn'); if (fb) fb.classList.toggle('f-on', filtersActive());
   const el = $('#res'); if (!el) return;
-  const act = !!(R.q || effSel().length); const tp = $('#top'); if (tp) { tp.classList.toggle('act', act); tp.classList.toggle('has', !!R.q); } if (act && R.heroOn) setHero(false); const mn = $('#main'); if (mn) mn.classList.toggle('idle', !act);
+  const act = !!(R.q || effSel().length); const tp = $('#top'); if (tp) { tp.classList.toggle('act', act); tp.classList.toggle('has', !!R.q); } const mn = $('#main'); if (mn) mn.classList.toggle('idle', !act);
   stLine(act);
   if (!act) { el.innerHTML = histHTML(); W = null; return; }
   let h = ''; W = null;
@@ -652,7 +600,7 @@ function updatePV() {
   const total = p.feed.total != null && !effSel().length ? `<span class="stat">${p.feed.total} ${t('total')}</span>` : '';
   const yr = yrs.length ? `<span class="stat">${Math.min(...yrs)}–${Math.max(...yrs)}</span>` : '';
   h.innerHTML = `<div class="phero">${im(d.img)}<h2>${esc(d.name)}</h2>
-${d.aliases && d.aliases.length ? `<div class="dim2">${esc(d.aliases.slice(0, 8).join('، '))}</div>` : ''}
+${d.aliases && d.aliases.length ? `<div class="dim2">${esc(d.aliases.slice(0, 8).join(SEP()))}</div>` : ''}
 <div>${total}${yr}${age !== '' ? `<span class="stat">${t('age')} ${age}</span>` : ''}</div></div>
 ${p.err ? errBox(p.err, 'pvd') : ''}
 ${d.gallery && d.gallery.length ? `<h2>${t('gallery')}</h2><div class="hs">${d.gallery.slice(0, 10).map(g => `<div class="pc" style="width:120px">${im(g)}</div>`).join('')}</div>` : ''}
@@ -661,6 +609,58 @@ ${ex.length ? `<h2>${t('details')}</h2><dl class="kv">${ex.map(([k, v]) => `<dt>
 ${studs.length ? `<h2>${t('workedWith')}</h2><div>${studs.map(([n, k]) => `<span class="chip">${esc(n)} ${k}</span>`).join('')}</div>` : ''}`;
   const f = $('#pvf'); if (f) { f.innerHTML = feedHTML(p.feed, 'pvf', visible(p.feed.items), sceneCard); watch(); }
 }
+
+/* ---- description language (ar default) + auto translation ---- */
+const TRK = 'vmf-tr';
+const TRC = new Map(), TRP = new Map(), TRE = {};
+try { Object.entries(JSON.parse(localStorage.getItem(TRK) || '{}')).forEach(([k, v]) => TRC.set(k, v)); } catch (e) {}
+const trKey = s => s.id + '|' + s.desc.length;
+function trChunks(text) {
+  const out = []; let c = '';
+  (text.match(/[^.!?\n]+[.!?]*\s*|\n+/g) || [text]).forEach(p => {
+    while (p.length > 380) { if (c) { out.push(c); c = ''; } out.push(p.slice(0, 380)); p = p.slice(380); }
+    if ((c + p).length > 380) { out.push(c); c = p; } else c += p;
+  });
+  if (c.trim()) out.push(c);
+  return out.map(x => x.trim()).filter(Boolean);
+}
+async function trChunk(q) {
+  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 12000);
+  try {
+    const r = await fetch('https://api.mymemory.translated.net/get?langpair=' + encodeURIComponent('en|ar') + '&q=' + encodeURIComponent(q), {signal:ctl.signal});
+    if (r.status === 429) throw 'quota';
+    if (!r.ok) throw 'http';
+    const d = await r.json(), x = String((d.responseData && d.responseData.translatedText) || '').trim();
+    if (d.quotaFinished || +d.responseStatus === 429 || /MYMEMORY WARNING/i.test(x)) throw 'quota';
+    if (+d.responseStatus !== 200 || !x || !/[\u0600-\u06FF]/.test(x) || x === q) throw 'empty';
+    return x;
+  } catch (e) { if (typeof e === 'string') throw e; throw ctl.signal.aborted ? 'timeout' : 'net'; }
+  finally { clearTimeout(to); }
+}
+function translate(s) {
+  const k = trKey(s); if (TRC.has(k)) return Promise.resolve(TRC.get(k)); if (TRP.has(k)) return TRP.get(k);
+  const p = (async () => {
+    const out = []; for (const c of trChunks(s.desc)) out.push(await trChunk(c));
+    const txt = out.join(' ').trim(); if (!txt) throw 'empty';
+    TRC.set(k, txt); if (TRC.size > 80) TRC.delete(TRC.keys().next().value);
+    try { localStorage.setItem(TRK, JSON.stringify(Object.fromEntries(TRC))); } catch (e) {}
+    return txt;
+  })().finally(() => TRP.delete(k));
+  TRP.set(k, p); return p;
+}
+function startTr(s) {
+  const id = s.id; delete TRE[id];
+  translate(s).then(() => 0, e => { TRE[id] = typeof e === 'string' ? e : 'empty'; }).then(() => { if (cur().v === 'scene' && cur().a === id) descUpdate(); });
+}
+function descHTML(s) {
+  const ar = S.lang === 'ar';
+  if (!s.desc) return s.full ? `<p class="dim2">${t('noDesc')}</p>` : '<i class="sk"></i><i class="sk s"></i>';
+  if (!ar) return `<p class="dtx" dir="ltr">${esc(s.desc)}</p>`;
+  if (TRC.has(trKey(s))) return `<p class="dtx" dir="rtl">${esc(TRC.get(trKey(s)))}</p>`;
+  if (TRE[s.id]) return `<div class="err"><span>${t('tr_' + TRE[s.id])}</span><button class="btn" data-act="trretry">${t('retry')}</button></div>`;
+  startTr(s); return `<p class="dim2">${t('translating')}</p><i class="sk"></i><i class="sk s"></i>`;
+}
+function descUpdate() { const el = $('#sdesc'), s = SC.get(cur().a); if (el && s) el.innerHTML = descHTML(s); }
 
 function sceneV(s) {
   if (!s) return '';
@@ -671,7 +671,7 @@ function sceneV(s) {
 <div class="dim2">${esc([s.studio && s.studio.name, s.date].filter(Boolean).join('  /  '))}</div>
 <div class="row" style="margin:16px 0">${link(s.url, t('source'), 'p')}${TV(s.trailer) ? '' : link(s.trailer, t('trailer'), '')}</div>
 ${TV(s.trailer) ? `<video class="tv" controls playsinline preload="metadata" poster="${esc(s.bg || s.img)}" src="${esc(s.trailer)}"></video>` : ''}
-${s.desc ? `<p style="white-space:pre-line;color:#c0c2c9;margin:0 0 6px">${esc(s.desc)}</p>` : (s.full ? '' : '<i class="sk"></i><i class="sk s"></i>')}
+<div id="sdesc">${descHTML(s)}</div>
 ${s.studio ? `<div class="srow" data-act="${key ? 'studio' : ''}" data-k="${key || ''}">${s.studio.logo ? `<img class="logo" referrerpolicy="no-referrer" src="${esc(s.studio.logo)}" alt="">` : '<div class="logo"></div>'}<div style="flex:1"><b>${esc(s.studio.name)}</b></div>${key ? '<span class="meta">›</span>' : ''}</div>` : ''}
 ${s.perfs.length ? `<h2>${t('cast')}</h2><div class="pg">${s.perfs.map(p => perfCard(p)).join('')}</div>` : ''}
 ${s.tags && s.tags.length ? `<h2>${t('tags')}</h2><div>${s.tags.map(x => `<span class="chip">${esc(x)}</span>`).join('')}</div>` : ''}
@@ -700,7 +700,7 @@ function settingsV() {
 <div class="set"><span>${t('defType')}</span>${sel('s_type', [['all', t('all')], ['scenes', t('scenes')], ['performers', t('performers')]], S.type)}</div>
 <div class="set"><span>${t('layout')}</span>${sel('s_view', [['grid', t('grid')], ['list', t('list')]], S.view)}</div>
 <div class="set"><span>${t('studios')}</span><button class="btn" data-act="nav" data-v="studios">›</button></div>
-<div class="set"><span>${t('saveDef')} (${S.sel.length})</span><button class="btn" data-act="savedef">OK</button></div>
+<div class="set"><span>${t('saveDef')} (${S.sel.length})</span><button class="btn" data-act="savedef">${t('ok')}</button></div>
 <div class="set" style="flex-wrap:wrap"><span>${t('token')}</span><div class="row" style="flex:1 1 100%"><input id="tok" class="inp" type="password" autocomplete="off" placeholder="${S.token ? '••••••••' : 'default'}" style="flex:1;width:auto"><button class="btn p" data-act="savetok">${t('saveTok')}</button></div></div></div>
 <div class="row" style="margin:14px 0"><button class="btn" data-act="clearhist">${t('clearHist')}</button><button class="btn" data-act="clearcache">${t('clearCache')}</button></div>
 <h2>${t('debug')}</h2><div class="dbg">${esc(R.log.join('\n') || '—')}</div>`;
@@ -724,7 +724,7 @@ document.addEventListener('click', e => {
     case 'ddopt': R.dd = false; $('#dd').classList.remove('open'); if (el.dataset.g === 'type') { S.type = k; save(); if (R.fo && $('#fpan')) $('#fpan').innerHTML = filtHTML(); runSearch(true); } else { R.sort = k; updateRes(); } break;
     case 'clear': { const q = $('#q'); if (q) { q.value = ''; q.dispatchEvent(new Event('input', {bubbles:true})); q.focus(); } break; }
     case 'submit': { const q = $('#q'); if (!q) break; clearTimeout(deb); addHist(q.value.trim()); runSearch(); q.blur(); break; }
-    case 'hero': { if (HERO.sw) break; const s = HERO.items[HERO.i]; if (s) { pushRecent('S', s); go('scene', s.id); } break; }
+    case 'trretry': { const sc = SC.get(cur().a); if (sc) { delete TRE[sc.id]; descUpdate(); } break; }
     case 'back': if (stack.length > 1) history.back(); else root('search'); break;
     case 'go': go(el.dataset.v); break;
     case 'filters': R.dd = false; if ($('#dd')) $('#dd').classList.remove('open'); R.fo = !R.fo; $('#fpan').innerHTML = R.fo ? filtHTML() : ''; break;
@@ -742,7 +742,7 @@ document.addEventListener('click', e => {
     case 'hq': R.q = el.dataset.q; if (cur().v !== 'search') root('search'); else render(); $('#q').value = R.q; runSearch(true); break;
     case 'clearhist': S.hist = []; save(); render(); break;
     case 'retry': { const f = k === undefined ? el.dataset.f : el.dataset.f; const feed = f === 'sf' ? R.sf : f === 'pf' ? R.pf : f === 'stf' ? ST.get(cur().a) : f === 'pvf' ? getPV(cur().a).feed : null;
-      if (feed) { feed.err = null; feed.next(); } else if (f === 'pvd') { PV.delete(cur().a); render(); } else if (f === 'hero') { HERO.err = null; HERO.loaded = false; loadHero(); } break; }
+      if (feed) { feed.err = null; feed.next(); } else if (f === 'pvd') { PV.delete(cur().a); render(); } break; }
     case 'resolve': resolveStudios(true); break;
     case 'savedef': S.defSel = [...S.sel]; save(); el.textContent = '✓'; break;
     case 'savetok': { const v = $('#tok').value.trim(); if (v) { S.token = v; cache.clear(); save(); $('#tok').value = ''; $('#tok').placeholder = '✓'; } break; }
@@ -752,7 +752,7 @@ document.addEventListener('click', e => {
 let deb;
 document.addEventListener('input', e => {
   const id = e.target.id;
-  if (id === 'q') { const a = !!(e.target.value.trim() || effSel().length); $('#top').classList.toggle('act', a); $('#main').classList.toggle('idle', !a); $('#top').classList.toggle('has', !!e.target.value); setHero(!a); clearTimeout(deb); deb = setTimeout(() => runSearch(), 450); }
+  if (id === 'q') { const a = !!(e.target.value.trim() || effSel().length); $('#top').classList.toggle('act', a); $('#main').classList.toggle('idle', !a); $('#top').classList.toggle('has', !!e.target.value); clearTimeout(deb); deb = setTimeout(() => runSearch(), 450); }
   if (id === 'ss') { const l = $('#sl'); if (l) l.innerHTML = listHTML(e.target.value); }
 });
 document.addEventListener('keydown', e => { if (e.target.id === 'q' && e.key === 'Enter') { clearTimeout(deb); addHist(e.target.value.trim()); runSearch(); e.target.blur(); } });
@@ -769,16 +769,11 @@ document.addEventListener('change', e => {
   else if (id === 's_view') { S.view = el.value; save(); }
 });
 
-document.addEventListener('focusin', e => { if (e.target.id === 'q' && !(e.target.value.trim() || effSel().length)) setHero(true); });
 document.addEventListener('pointermove', e => { const b = e.target.closest && e.target.closest('#top'); if (!b) return; const r = b.getBoundingClientRect(); b.style.setProperty('--mx', (e.clientX - r.left) + 'px'); b.style.setProperty('--my', (e.clientY - r.top) + 'px'); }, {passive:true});
-let tx = null;
-document.addEventListener('touchstart', e => { tx = e.target.closest('#hbox') ? e.touches[0].clientX : null; }, {passive:true});
-document.addEventListener('touchend', e => { if (tx == null) return; const dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 40) { HERO.sw = true; setTimeout(() => HERO.sw = false, 350); heroGo((dx < 0 ? 1 : -1) * (S.lang === 'ar' ? -1 : 1)); heroStart(); } }, {passive:true});
-document.addEventListener('visibilitychange', () => { if (document.hidden) heroStop(); else if (R.heroOn) heroStart(); });
 
 /* ================= START ================= */
 render();
-resolveStudios(false).then(() => setTimeout(loadHero, 300));
+resolveStudios(false);
 </script>
 </body>
 </html>
